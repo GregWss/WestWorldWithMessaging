@@ -16,7 +16,7 @@
 #include "BaseGameEntity.h"
 #include "Locations.h"
 #include "misc/ConsoleUtils.h"
-// #include "MinerOwnedStates.h"
+#include "HunterOwnedStates.h"
 #include "fsm/StateMachine.h"
 
 template <class entity_type> class State;
@@ -53,7 +53,7 @@ public:
 		//set up state machine
 		h_pStateMachine = new StateMachine<Hunter>(this);
 
-		//h_pStateMachine->SetCurrentState(GoHomeAndSleepTilRested::Instance());
+		h_pStateMachine->SetCurrentState(EnterAndDrinkAtSaloon::Instance());
 		// GoHomeAndSleepTilRested pour le chasseur sera définie dans HunterOwnedStates
 
 		/* NOTE, A GLOBAL STATE HAS NOT BEEN IMPLEMENTED FOR THE MINER */

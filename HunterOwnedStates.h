@@ -34,11 +34,11 @@ public:
 	//this is a singleton
 	static EnterAndDrinkAtSaloon* Instance();
 
-	virtual void Enter(Hunter* hunter);
+	virtual void Enter(Hunter* pHunter);
 
-	virtual void Execute(Hunter* Hunter);
+	virtual void Execute(Hunter* pHunter);
 
-	virtual void Exit(Hunter* Hunter);
+	virtual void Exit(Hunter* pHunter);
 
 	virtual bool OnMessage(Hunter* agent, const Telegram& msg);
 
@@ -64,11 +64,11 @@ public:
 	//this is a singleton
 	static DrunkAtSaloon* Instance();
 
-	virtual void Enter(Hunter* hunter);
+	virtual void Enter(Hunter* pHunter);
 
-	virtual void Execute(Hunter* Hunter);
+	virtual void Execute(Hunter* pHunter);
 
-	virtual void Exit(Hunter* Hunter);
+	virtual void Exit(Hunter* pHunter);
 
 	virtual bool OnMessage(Hunter* agent, const Telegram& msg);
 
@@ -93,11 +93,11 @@ public:
 	//this is a singleton
 	static FightAtSaloon* Instance();
 
-	virtual void Enter(Hunter* hunter);
+	virtual void Enter(Hunter* pHunter);
 
-	virtual void Execute(Hunter* Hunter);
+	virtual void Execute(Hunter* pHunter);
 
-	virtual void Exit(Hunter* Hunter);
+	virtual void Exit(Hunter* pHunter);
 
 	virtual bool OnMessage(Hunter* agent, const Telegram& msg);
 
