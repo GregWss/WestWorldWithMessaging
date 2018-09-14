@@ -8,6 +8,7 @@ enum message_type
   Msg_HiHoneyImHome,
   Msg_StewReady,
   Msg_UTalkingToMe,
+  Msg_CanYouMove
 };
 
 
@@ -26,6 +27,10 @@ inline std::string MsgToStr(int msg)
   case 2:
 
 	return "UTalkingToMe";
+
+  case 3:
+
+	  return "CanYouMove";
 
   default:
 

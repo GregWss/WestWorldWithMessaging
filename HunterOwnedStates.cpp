@@ -57,7 +57,7 @@ void EnterAndDrinkAtSaloon::Exit(Hunter * pHunter)
 		<< "Hmm tasty";
 }
 
-bool EnterAndDrinkAtSaloon::OnMessage(Hunter * agent, const Telegram & msg)
+bool EnterAndDrinkAtSaloon::OnMessage(Hunter * pHunter, const Telegram & msg)
 {
 	return false;
 }
@@ -91,32 +91,70 @@ void DrunkAtSaloon::Execute(Hunter * pHunter)
 void DrunkAtSaloon::Exit(Hunter * pHunter)
 {
 	cout << "\n" << GetNameOfEntity(pHunter->ID()) << ": "
-		<< "I'm so drunk";
+		<< "Come and fight !";
 }
 
-bool DrunkAtSaloon::OnMessage(Hunter * agent, const Telegram & msg)
+bool DrunkAtSaloon::OnMessage(Hunter * pHunter, const Telegram & msg)
 {
-	return false;
+	SetTextColor(BACKGROUND_RED | FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+
+	switch (msg.Msg)
+	{
+	case Msg_CanYouMove:
+
+		cout << "\nMessage handled by " << GetNameOfEntity(pHunter->ID())
+			<< " at time: " << Clock->GetCurrentTime();
+
+		SetTextColor(FOREGROUND_RED | FOREGROUND_INTENSITY);
+
+		cout << "\n" << GetNameOfEntity(pHunter->ID())
+			<< ": No !";
+
+		pHunter->GetFSM()->ChangeState(FightAtSaloon::Instance());
+
+		return true;
+
+	}//end switch
+
+	return false; //send message to global message handler
 }
 
 FightAtSaloon * FightAtSaloon::Instance()
 {
-	return nullptr;
+	static FightAtSaloon instance;
+
+	return &instance;
 }
 
 void FightAtSaloon::Enter(Hunter * pHunter)
 {
+	//if the Hunter is not already located at the saloon, he must
+	//change location to the saloon
+	if (pHunter->Location() != saloon)
+	{
+		cout << "\n" << GetNameOfEntity(pHunter->ID()) << ": " << "Walkin' to the saloon";
+
+		pHunter->ChangeLocation(saloon);
+	}
 }
 
 void FightAtSaloon::Execute(Hunter * pHunter)
 {
+	//Now the hunter is drank in the saloon
+
+	cout << "\n" << GetNameOfEntity(pHunter->ID()) << ": " << "Hit ya'";
+
+	pHunter->AddToAlcoholQuantity(-5);
+	pHunter->GetFSM()->ChangeState(EnterAndDrinkAtSaloon::Instance());
 }
 
 void FightAtSaloon::Exit(Hunter * pHunter)
 {
+	cout << "\n" << GetNameOfEntity(pHunter->ID()) << ": "
+		<< "More beverage pls !";
 }
 
-bool FightAtSaloon::OnMessage(Hunter * agent, const Telegram & msg)
+bool FightAtSaloon::OnMessage(Hunter * pHunter, const Telegram & msg)
 {
 	return false;
 }

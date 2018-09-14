@@ -238,6 +238,14 @@ void QuenchThirst::Execute(Miner* pMiner)
   pMiner->BuyAndDrinkAWhiskey();
 
   cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "That's mighty fine sippin' liquer";
+  
+  //Ask a man to move
+  Dispatch->DispatchMessage(SEND_MSG_IMMEDIATELY, //time delay
+	  pMiner->ID(),        //ID of sender
+	  ent_Jeff,            //ID of recipient
+	  Msg_CanYouMove,   //the message
+	  NO_ADDITIONAL_INFO);
+
 
   pMiner->GetFSM()->ChangeState(EnterMineAndDigForNugget::Instance());  
 }
