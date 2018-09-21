@@ -110,7 +110,7 @@ bool DrunkAtSaloon::OnMessage(Hunter * pHunter, const Telegram & msg)
 		cout << "\n" << GetNameOfEntity(pHunter->ID())
 			<< ": No !";
 
-		pHunter->GetFSM()->ChangeState(FightAtSaloon::Instance());
+		pHunter->GetFSM()->ChangeState(FightAtSaloonH::Instance());
 
 		return true;
 
@@ -119,14 +119,14 @@ bool DrunkAtSaloon::OnMessage(Hunter * pHunter, const Telegram & msg)
 	return false; //send message to global message handler
 }
 
-FightAtSaloon * FightAtSaloon::Instance()
+FightAtSaloonH * FightAtSaloonH::Instance()
 {
-	static FightAtSaloon instance;
+	static FightAtSaloonH instance;
 
 	return &instance;
 }
 
-void FightAtSaloon::Enter(Hunter * pHunter)
+void FightAtSaloonH::Enter(Hunter * pHunter)
 {
 	//if the Hunter is not already located at the saloon, he must
 	//change location to the saloon
@@ -138,7 +138,7 @@ void FightAtSaloon::Enter(Hunter * pHunter)
 	}
 }
 
-void FightAtSaloon::Execute(Hunter * pHunter)
+void FightAtSaloonH::Execute(Hunter * pHunter)
 {
 	//Now the hunter is drank in the saloon
 
@@ -148,13 +148,13 @@ void FightAtSaloon::Execute(Hunter * pHunter)
 	pHunter->GetFSM()->ChangeState(EnterAndDrinkAtSaloon::Instance());
 }
 
-void FightAtSaloon::Exit(Hunter * pHunter)
+void FightAtSaloonH::Exit(Hunter * pHunter)
 {
 	cout << "\n" << GetNameOfEntity(pHunter->ID()) << ": "
 		<< "More beverage pls !";
 }
 
-bool FightAtSaloon::OnMessage(Hunter * pHunter, const Telegram & msg)
+bool FightAtSaloonH::OnMessage(Hunter * pHunter, const Telegram & msg)
 {
 	return false;
 }

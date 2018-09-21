@@ -47,3 +47,22 @@ bool Miner::Fatigued()const
 
   return false;
 }
+
+//ne pqs oublier de tester la limite
+void Miner::AddToHealth(int val)
+{
+	// if val > HealthThreshold : 3
+	m_iHealth += val;
+}
+
+void Miner::Punch(int val)
+{
+	m_iHealth -= val;
+}
+
+bool Miner::Hurt()const
+{
+	if (m_iHealth <= 0) { return true; }
+
+	return false;
+}

@@ -78,20 +78,20 @@ public:
 //
 //  In this state the hunter will be fighting
 //------------------------------------------------------------------------
-class FightAtSaloon : public State<Hunter>
+class FightAtSaloonH : public State<Hunter>
 {
 private:
 
-	FightAtSaloon() {}
+	FightAtSaloonH() {}
 
 	//copy ctor and assignment should be private
-	FightAtSaloon(const FightAtSaloon&);
-	FightAtSaloon& operator=(const FightAtSaloon&);
+	FightAtSaloonH(const FightAtSaloonH&);
+	FightAtSaloonH& operator=(const FightAtSaloonH&);
 
 public:
 
 	//this is a singleton
-	static FightAtSaloon* Instance();
+	static FightAtSaloonH* Instance();
 
 	virtual void Enter(Hunter* pHunter);
 

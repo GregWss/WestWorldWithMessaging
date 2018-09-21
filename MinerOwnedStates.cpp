@@ -246,8 +246,9 @@ void QuenchThirst::Execute(Miner* pMiner)
 	  Msg_CanYouMove,   //the message
 	  NO_ADDITIONAL_INFO);
 
+	pMiner->GetFSM()->ChangeState(FightAtSaloonM::Instance());
 
-  pMiner->GetFSM()->ChangeState(EnterMineAndDigForNugget::Instance());  
+  //pMiner->GetFSM()->ChangeState(EnterMineAndDigForNugget::Instance());  
 }
 
 
@@ -296,5 +297,89 @@ bool EatStew::OnMessage(Miner* pMiner, const Telegram& msg)
   //send msg to global message handler
   return false;
 }
+///////////////////////////////////////////////////////////////////////////////////////////////
 
 
+//////////////////////////////////////////////////////////////////////////////////////////////
+FightAtSaloonM * FightAtSaloonM::Instance()
+{
+	static FightAtSaloonM instance;
+
+	return &instance;
+}
+
+void FightAtSaloonM::Enter(Miner * pMiner)
+{
+	//if the Miner is not already located at the saloon, he must
+	//change location to the saloon
+	if (pMiner->Location() != saloon)
+	{
+		cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "Walkin' to the saloon";
+
+		pMiner->ChangeLocation(saloon);
+	}
+}
+
+void FightAtSaloonM::Execute(Miner * pMiner)
+{
+	//TEST
+	pMiner->Punch(3);
+
+	if(pMiner->Hurt())
+		pMiner->GetFSM()->ChangeState(EnterHospitalAndHeal::Instance());
+	else
+		pMiner->GetFSM()->ChangeState(EnterMineAndDigForNugget::Instance());
+}
+
+void FightAtSaloonM::Exit(Miner * pMiner)
+{
+	cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": "
+		<< "Going back to work !";
+}
+
+bool FightAtSaloonM::OnMessage(Miner * pMiner, const Telegram & msg)
+{
+	return false;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////////////////
+EnterHospitalAndHeal * EnterHospitalAndHeal::Instance()
+{
+	static EnterHospitalAndHeal instance;
+
+	return &instance;
+}
+
+void EnterHospitalAndHeal::Enter(Miner * pMiner)
+{
+	//The miner is going to hospital
+	if (pMiner->Location() != hospital)
+	{
+		cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "It hurts ! Going to Hospital";
+
+		pMiner->ChangeLocation(hospital);
+	}
+}
+
+void EnterHospitalAndHeal::Execute(Miner * pMiner)
+{
+	//The miner recover
+	pMiner->AddToHealth(3);
+	cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "I feel much better !";
+
+	pMiner->GetFSM()->ChangeState(EnterMineAndDigForNugget::Instance());
+}
+
+void EnterHospitalAndHeal::Exit(Miner * pMiner)
+{
+	cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": "
+		<< "Going back to work !";
+}
+
+bool EnterHospitalAndHeal::OnMessage(Miner * pMiner, const Telegram & msg)
+{
+	return false;
+}

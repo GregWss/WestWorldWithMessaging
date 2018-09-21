@@ -22,7 +22,7 @@ void Hunter::AddToAlcoholQuantity(const int val)
 
 bool Hunter::Drank()const
 {
-	if (h_alcohol > AlcoholThreshold)
+	if (h_alcohol >= AlcoholThreshold)
 	{
 		return true;
 	}
