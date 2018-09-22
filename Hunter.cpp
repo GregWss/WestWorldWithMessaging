@@ -22,10 +22,35 @@ void Hunter::AddToAlcoholQuantity(const int val)
 
 bool Hunter::Drank()const
 {
-	if (h_alcohol > AlcoholThreshold)
+	if (h_alcohol >= AlcoholThreshold)
 	{
 		return true;
 	}
 
 	return false;
+}
+
+void Hunter::AddToAlcoholQuantity(const int val)
+{
+	h_alcohol += val;
+
+	if (h_alcohol < 0) h_alcohol = 0;
+}
+
+void Hunter::h_AddToHealth(int val) {
+	if (this->h_health + val =< Health)
+		this->h_health += val;
+}
+
+void Hunter::h_Punch(int val)
+{
+	this->h_health -= val;
+}
+
+void Hunter::h_Hurt()
+{
+	if (h_health <= 0) 
+		return true;
+	else 
+		return false;
 }

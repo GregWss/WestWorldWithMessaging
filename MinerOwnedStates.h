@@ -172,6 +172,64 @@ public:
   virtual bool OnMessage(Miner* agent, const Telegram& msg);
 };
 
+//------------------------------------------------------------------------
+//
+//  In this state the miner will be fighting
+//------------------------------------------------------------------------
+class FightAtSaloonM : public State<Miner>
+{
+private:
+
+	FightAtSaloonM() {}
+
+	//copy ctor and assignment should be private
+	FightAtSaloonM(const FightAtSaloonM&);
+	FightAtSaloonM& operator=(const FightAtSaloonM&);
+
+public:
+
+	//this is a singleton
+	static FightAtSaloonM* Instance();
+
+	virtual void Enter(Miner* pMiner);
+
+	virtual void Execute(Miner* pMiner);
+
+	virtual void Exit(Miner* pMiner);
+
+	virtual bool OnMessage(Miner* agent, const Telegram& msg);
+
+};
+
+//------------------------------------------------------------------------
+//
+//  In this state the miner will be healing himself
+//------------------------------------------------------------------------
+class EnterHospitalAndHeal : public State<Miner>
+{
+private:
+
+	EnterHospitalAndHeal() {}
+
+	//copy ctor and assignment should be private
+	EnterHospitalAndHeal(const EnterHospitalAndHeal&);
+	EnterHospitalAndHeal& operator=(const EnterHospitalAndHeal&);
+
+public:
+
+	//this is a singleton
+	static EnterHospitalAndHeal* Instance();
+
+	virtual void Enter(Miner* pMiner);
+
+	virtual void Execute(Miner* pMiner);
+
+	virtual void Exit(Miner* pMiner);
+
+	virtual bool OnMessage(Miner* agent, const Telegram& msg);
+
+};
+
 
 
 

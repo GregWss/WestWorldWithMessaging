@@ -8,7 +8,10 @@ enum message_type
   Msg_HiHoneyImHome,
   Msg_StewReady,
   Msg_UTalkingToMe,
-  Msg_CanYouMove
+  Msg_CanYouMove,
+  Msg_Hit,
+  Msg_KnockOut,
+  Msg_Miss
 };
 
 

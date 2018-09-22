@@ -6,7 +6,7 @@
 //
 //  Desc:   All the states that can be assigned to the Hunter class.
 //
-//  Author: Baptiste ROUPAIN & Grégory WEISS
+//  Author: Baptiste ROUPAIN & Grï¿½gory WEISS
 //
 //------------------------------------------------------------------------
 #include "fsm/State.h"
@@ -78,20 +78,20 @@ public:
 //
 //  In this state the hunter will be fighting
 //------------------------------------------------------------------------
-class FightAtSaloon : public State<Hunter>
+class FightAtSaloonH : public State<Hunter>
 {
 private:
 
-	FightAtSaloon() {}
+	FightAtSaloonH() {}
 
 	//copy ctor and assignment should be private
-	FightAtSaloon(const FightAtSaloon&);
-	FightAtSaloon& operator=(const FightAtSaloon&);
+	FightAtSaloonH(const FightAtSaloonH&);
+	FightAtSaloonH& operator=(const FightAtSaloonH&);
 
 public:
 
 	//this is a singleton
-	static FightAtSaloon* Instance();
+	static FightAtSaloonH* Instance();
 
 	virtual void Enter(Hunter* pHunter);
 
@@ -103,5 +103,33 @@ public:
 
 };
 
+//------------------------------------------------------------------------
+//
+//  In this state the hunter will be healing himself
+//------------------------------------------------------------------------
+class HealHimself : public State<Hunter>
+{
+private:
+
+	HealHimself() {}
+
+	//copy ctor and assignment should be private
+	HealHimself(const HealHimself&);
+	HealHimself& operator=(const HealHimself&);
+
+public:
+
+	//this is a singleton
+	static HealHimself* Instance();
+
+	virtual void Enter(Hunter* pHunter);
+
+	virtual void Execute(Hunter* pHunter);
+
+	virtual void Exit(Hunter* pHunter);
+
+	virtual bool OnMessage(Hunter* agent, const Telegram& msg);
+
+};
 
 #endif

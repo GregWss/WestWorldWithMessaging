@@ -6,7 +6,7 @@
 //
 //  Desc:   A class defining a hunter who like to fight.
 //
-//  Author: Baptiste ROUPAIN & Grégory WEISS
+//  Author: Baptiste ROUPAIN & GrÃ©gory WEISS
 //
 //------------------------------------------------------------------------
 #include <string>
@@ -54,7 +54,7 @@ public:
 		h_pStateMachine = new StateMachine<Hunter>(this);
 
 		h_pStateMachine->SetCurrentState(EnterAndDrinkAtSaloon::Instance());
-		// GoHomeAndSleepTilRested pour le chasseur sera définie dans HunterOwnedStates
+		// GoHomeAndSleepTilRested pour le chasseur sera dï¿½finie dans HunterOwnedStates
 
 		/* NOTE, A GLOBAL STATE HAS NOT BEEN IMPLEMENTED FOR THE MINER */
 	}
@@ -76,9 +76,12 @@ public:
 	location_type Location()const { return h_Location; }
 	void          ChangeLocation(location_type loc) { h_Location = loc; }
 
-	//Définir ici l'ensemble des méthodes du hunter
-	void Hunter::AddToAlcoholQuantity(const int val);
-	bool Hunter::Drank()const;
+	//Dï¿½finir ici l'ensemble des mï¿½thodes du hunter
+	void 			Hunter::AddToAlcoholQuantity(const int val);
+	bool 			Hunter::Drank()const;
+	void	  	m_AddToHealth(int val);
+	void			Hunter::h_Punch(int val);
+  	bool			Hunter::h_Hurt()const;
 
 
 };

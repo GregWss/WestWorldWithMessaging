@@ -30,6 +30,8 @@ const int MaxNuggets         = 3;
 const int ThirstLevel        = 5;
 //above this value a miner is sleepy
 const int TirednessThreshold = 5;
+//aMax value for miner health
+const int HealthThreshold = 3;
 
 
 
@@ -53,12 +55,16 @@ private:
   //the higher the value, the more tired the miner
   int                   m_iFatigue;
 
+  //the value of the miner health
+  int					m_iHealth;
+
 public:
 
   Miner(int id):m_Location(shack),
                           m_iGoldCarried(0),
                           m_iMoneyInBank(0),
                           m_iThirst(0),
+						              m_iHealth(3),
                           m_iFatigue(0),
                           BaseGameEntity(id)
                                
@@ -104,6 +110,9 @@ public:
   bool          Thirsty()const; 
   void          BuyAndDrinkAWhiskey(){m_iThirst = 0; m_iMoneyInBank-=2;}
 
+  void	  	m_AddToHealth(int val);
+  void			m_Punch(int val);
+  bool			m_Hurt()const;
 };
 
 
