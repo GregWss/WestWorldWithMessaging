@@ -30,15 +30,8 @@ bool Hunter::Drank()const
 	return false;
 }
 
-void Hunter::AddToAlcoholQuantity(const int val)
-{
-	h_alcohol += val;
-
-	if (h_alcohol < 0) h_alcohol = 0;
-}
-
 void Hunter::h_AddToHealth(int val) {
-	if (this->h_health + val =< Health)
+	if (this->h_health + val <= Health)
 		this->h_health += val;
 }
 
@@ -47,7 +40,7 @@ void Hunter::h_Punch(int val)
 	this->h_health -= val;
 }
 
-void Hunter::h_Hurt()
+bool Hunter::h_Hurt()const
 {
 	if (h_health <= 0) 
 		return true;

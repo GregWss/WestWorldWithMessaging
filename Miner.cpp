@@ -50,8 +50,8 @@ bool Miner::Fatigued()const
 
 void Miner::m_AddToHealth(int val)
 {
-	if (this->h_health + val =< HealthThreshold)
-	  this->m_iHealth += val;
+	if (m_iHealth + val <= HealthThreshold)
+	  m_iHealth += val;
 }
 
 void Miner::m_Punch(int val)
@@ -61,8 +61,8 @@ void Miner::m_Punch(int val)
 
 bool Miner::m_Hurt()const
 {
-	if (m_iHealth <= 0) 
-    return true;
-  else
-	  return false;
+	if (m_iHealth <= 0)
+		return true;
+	else
+		return false;
 }

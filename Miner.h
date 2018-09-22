@@ -64,7 +64,7 @@ public:
                           m_iGoldCarried(0),
                           m_iMoneyInBank(0),
                           m_iThirst(0),
-						              m_iHealth(3),
+						  m_iHealth(3),
                           m_iFatigue(0),
                           BaseGameEntity(id)
                                
@@ -110,7 +110,7 @@ public:
   bool          Thirsty()const; 
   void          BuyAndDrinkAWhiskey(){m_iThirst = 0; m_iMoneyInBank-=2;}
 
-  void	  	m_AddToHealth(int val);
+  void	  		m_AddToHealth(int val);
   void			m_Punch(int val);
   bool			m_Hurt()const;
 };

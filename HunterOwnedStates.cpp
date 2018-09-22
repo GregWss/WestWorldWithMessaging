@@ -152,7 +152,7 @@ void FightAtSaloonH::Execute(Hunter * pHunter)
 		pHunter->AddToAlcoholQuantity(-5);
 		pHunter->GetFSM()->ChangeState(HealHimself::Instance());
 	}else {	
-		punch_probability = rand() % 100;
+		float punch_probability = rand() % 100;
 		if (punch_probability < 80) {
 			cout << "\n" << GetNameOfEntity(pHunter->ID()) << ": " << "Hit ya'";
 			// we send the message of hit to miner
@@ -251,10 +251,11 @@ void HealHimself::Enter(Hunter * pHunter)
 void HealHimself::Execute(Hunter * pHunter)
 {
 	//The hunter recover
-	pHunter->AddToHealth(3);
+	pHunter->h_AddToHealth(3);
 	cout << "\n" << GetNameOfEntity(pHunter->ID()) << ": " << "I feel much better !";
 	pHunter->GetFSM()->ChangeState(EnterAndDrinkAtSaloon::Instance());
 }
+
 
 void HealHimself::Exit(Hunter * pHunter)
 {

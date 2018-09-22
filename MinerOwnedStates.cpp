@@ -322,39 +322,37 @@ void FightAtSaloonM::Enter(Miner * pMiner)
 
 void FightAtSaloonM::Execute(Miner * pMiner)
 {
-	
-  if(pMiner->m_Hurt()) {
+	if (pMiner->m_Hurt()) {
 		cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "I'm hurt !'";
 		// we send the message of hurt to hunter
 		Dispatch->DispatchMessage(SEND_MSG_IMMEDIATELY, //time delay
-		pMiner->ID(),        //ID of sender
-		ent_Jeff,            //ID of recipient
-		Msg_KnockOut,   //the message
-		NO_ADDITIONAL_INFO);
+			pMiner->ID(),        //ID of sender
+			ent_Jeff,            //ID of recipient
+			Msg_KnockOut,   //the message
+			NO_ADDITIONAL_INFO);
 		pMiner->GetFSM()->ChangeState(EnterHospitalAndHeal::Instance()); // a definir
-	}else {	
-		punch_probability = rand() % 100;
+	}
+	else {
+		float punch_probability = rand() % 100;
 		if (punch_probability < 51) {
 			cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "Hit ya'";
 			// we send the message of hit to hunter
 			Dispatch->DispatchMessage(SEND_MSG_IMMEDIATELY, //time delay
-			pMiner->ID(),        //ID of sender
-			ent_Jeff,            //ID of recipient
-			Msg_Hit,   //the message
-			NO_ADDITIONAL_INFO);
-		}else{
+				pMiner->ID(),        //ID of sender
+				ent_Jeff,            //ID of recipient
+				Msg_Hit,   //the message
+				NO_ADDITIONAL_INFO);
+		}
+		else {
 			// we send the message of miss to hunter
 			cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "Miss ya'";
 			Dispatch->DispatchMessage(SEND_MSG_IMMEDIATELY, //time delay
-			pMiner->ID(),        //ID of sender
-			ent_Jeff,            //ID of recipient
-			Msg_Miss,   //the message
-			NO_ADDITIONAL_INFO);
+				pMiner->ID(),        //ID of sender
+				ent_Jeff,            //ID of recipient
+				Msg_Miss,   //the message
+				NO_ADDITIONAL_INFO);
 		}
 	}
-
-}
-	// pMiner->GetFSM()->ChangeState(EnterMineAndDigForNugget::Instance());
 }
 
 void FightAtSaloonM::Exit(Miner * pMiner)
@@ -435,7 +433,7 @@ void EnterHospitalAndHeal::Enter(Miner * pMiner)
 void EnterHospitalAndHeal::Execute(Miner * pMiner)
 {
 	//The miner recover
-	pMiner->AddToHealth(3);
+	pMiner->m_AddToHealth(3);
 	cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "I feel much better !";
 
 	pMiner->GetFSM()->ChangeState(EnterMineAndDigForNugget::Instance());

@@ -76,10 +76,10 @@ public:
 	location_type Location()const { return h_Location; }
 	void          ChangeLocation(location_type loc) { h_Location = loc; }
 
-	//D�finir ici l'ensemble des m�thodes du hunter
+	//Definir ici l'ensemble des methodes du hunter
 	void 			Hunter::AddToAlcoholQuantity(const int val);
 	bool 			Hunter::Drank()const;
-	void	  	m_AddToHealth(int val);
+	void	  		Hunter::h_AddToHealth(int val);
 	void			Hunter::h_Punch(int val);
   	bool			Hunter::h_Hurt()const;
 
