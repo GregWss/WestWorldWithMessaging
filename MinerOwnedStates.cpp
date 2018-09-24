@@ -387,7 +387,7 @@ bool FightAtSaloonM::OnMessage(Miner * pMiner, const Telegram & msg)
 		SetTextColor(FOREGROUND_RED | FOREGROUND_INTENSITY);
 
 		cout << "\n" << GetNameOfEntity(pMiner->ID())
-			<< "Vieille trousse a bite !";
+			<< ": Vieille trousse a bite !";
 		
     return true;
 
@@ -398,7 +398,7 @@ bool FightAtSaloonM::OnMessage(Miner * pMiner, const Telegram & msg)
 		SetTextColor(FOREGROUND_RED | FOREGROUND_INTENSITY);
 
 		cout << "\n" << GetNameOfEntity(pMiner->ID())
-			<< "Poubelle a sperme !";
+			<< ": Poubelle a sperme !";
 		
     pMiner->GetFSM()->ChangeState(EnterMineAndDigForNugget::Instance());
     return true;
@@ -442,7 +442,7 @@ void EnterHospitalAndHeal::Execute(Miner * pMiner)
 void EnterHospitalAndHeal::Exit(Miner * pMiner)
 {
 	cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": "
-		<< "Going back to work !";
+		<< "Goin' back to work !";
 }
 
 bool EnterHospitalAndHeal::OnMessage(Miner * pMiner, const Telegram & msg)

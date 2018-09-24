@@ -205,7 +205,7 @@ bool FightAtSaloonH::OnMessage(Hunter * pHunter, const Telegram & msg)
 		SetTextColor(FOREGROUND_RED | FOREGROUND_INTENSITY);
 
 		cout << "\n" << GetNameOfEntity(pHunter->ID())
-			<< "Chiure démoniaque !";
+			<< ": Chiure démoniaque !";
 		
     return true;
 
@@ -216,7 +216,7 @@ bool FightAtSaloonH::OnMessage(Hunter * pHunter, const Telegram & msg)
 		SetTextColor(FOREGROUND_RED | FOREGROUND_INTENSITY);
 
 		cout << "\n" << GetNameOfEntity(pHunter->ID())
-			<< "Je chie dans la pute qui t'a mise au monde !";
+			<< ": Je chie dans la pute qui t'a mise au monde !";
 		
     pHunter->GetFSM()->ChangeState(EnterAndDrinkAtSaloon::Instance());
     return true;
