@@ -31,8 +31,7 @@ bool Hunter::Drank()const
 }
 
 void Hunter::h_AddToHealth(int val) {
-	if (this->h_health + val <= Health)
-		this->h_health += val;
+	this->h_health += val;
 }
 
 void Hunter::h_Punch(int val)

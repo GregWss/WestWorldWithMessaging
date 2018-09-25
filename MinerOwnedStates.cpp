@@ -246,22 +246,39 @@ void QuenchThirst::Execute(Miner* pMiner)
 	  Msg_CanYouMove,   //the message
 	  NO_ADDITIONAL_INFO);
 
-	pMiner->GetFSM()->ChangeState(FightAtSaloonM::Instance());
-
   //pMiner->GetFSM()->ChangeState(EnterMineAndDigForNugget::Instance());  
 }
 
 
 void QuenchThirst::Exit(Miner* pMiner)
 { 
-  cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "Leaving the saloon, feelin' good";
+  cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "Leaving the saloon.";
 }
 
 
 bool QuenchThirst::OnMessage(Miner* pMiner, const Telegram& msg)
 {
-  //send msg to global message handler
-  return false;
+	SetTextColor(BACKGROUND_RED | FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+
+	switch (msg.Msg)
+	{
+	case Msg_IWontMove:
+
+		cout << "\nMessage handled by " << GetNameOfEntity(pMiner->ID())
+			<< " at time: " << Clock->GetCurrentTime();
+
+		SetTextColor(FOREGROUND_RED | FOREGROUND_INTENSITY);
+
+		cout << "\n" << GetNameOfEntity(pMiner->ID())
+			<< ": Okay man, fight me!";
+
+		pMiner->GetFSM()->ChangeState(FightAtSaloonM::Instance());
+
+		return true;
+
+	}//end switch
+
+	return false; //send message to global message handler
 }
 
 //------------------------------------------------------------------------EatStew
@@ -334,7 +351,7 @@ void FightAtSaloonM::Execute(Miner * pMiner)
 	}
 	else {
 		float punch_probability = rand() % 100;
-		if (punch_probability < 51) {
+		if (punch_probability < 50) {
 			cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "Hit ya'";
 			// we send the message of hit to hunter
 			Dispatch->DispatchMessage(SEND_MSG_IMMEDIATELY, //time delay
@@ -357,8 +374,12 @@ void FightAtSaloonM::Execute(Miner * pMiner)
 
 void FightAtSaloonM::Exit(Miner * pMiner)
 {
-	cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": "
-		<< "Going back to work !";
+	if (pMiner->m_Hurt())
+		cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": "
+			<< "Goin' to the Hospital !";
+	else
+		cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": "
+			<< "Goin' back to work !";
 }
 
 bool FightAtSaloonM::OnMessage(Miner * pMiner, const Telegram & msg)
@@ -387,7 +408,7 @@ bool FightAtSaloonM::OnMessage(Miner * pMiner, const Telegram & msg)
 		SetTextColor(FOREGROUND_RED | FOREGROUND_INTENSITY);
 
 		cout << "\n" << GetNameOfEntity(pMiner->ID())
-			<< ": Vieille trousse a bite !";
+			<< ": You are so bad !";
 		
     return true;
 
@@ -398,7 +419,7 @@ bool FightAtSaloonM::OnMessage(Miner * pMiner, const Telegram & msg)
 		SetTextColor(FOREGROUND_RED | FOREGROUND_INTENSITY);
 
 		cout << "\n" << GetNameOfEntity(pMiner->ID())
-			<< ": Poubelle a sperme !";
+			<< ": Ha ! You are Knocked out ! ";
 		
     pMiner->GetFSM()->ChangeState(EnterMineAndDigForNugget::Instance());
     return true;
@@ -424,7 +445,7 @@ void EnterHospitalAndHeal::Enter(Miner * pMiner)
 	//The miner is going to hospital
 	if (pMiner->Location() != hospital)
 	{
-		cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "It hurts ! Going to Hospital";
+		cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "It hurts ! Am in the Hospital";
 
 		pMiner->ChangeLocation(hospital);
 	}

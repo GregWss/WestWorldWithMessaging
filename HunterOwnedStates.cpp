@@ -105,10 +105,14 @@ bool DrunkAtSaloon::OnMessage(Hunter * pHunter, const Telegram & msg)
 		cout << "\nMessage handled by " << GetNameOfEntity(pHunter->ID())
 			<< " at time: " << Clock->GetCurrentTime();
 
-		SetTextColor(FOREGROUND_RED | FOREGROUND_INTENSITY);
+		SetTextColor(FOREGROUND_BLUE | FOREGROUND_INTENSITY);
 
-		cout << "\n" << GetNameOfEntity(pHunter->ID())
-			<< ": No !";
+		// we send the message to the miner to inform him I fight too
+		Dispatch->DispatchMessage(SEND_MSG_IMMEDIATELY, //time delay
+			pHunter->ID(),        //ID of sender
+			ent_Miner_Bob,            //ID of recipient
+			Msg_IWontMove,   //the message
+			NO_ADDITIONAL_INFO);
 
 		pHunter->GetFSM()->ChangeState(FightAtSaloonH::Instance());
 
@@ -149,11 +153,11 @@ void FightAtSaloonH::Execute(Hunter * pHunter)
 		ent_Miner_Bob,            //ID of recipient
 		Msg_KnockOut,   //the message
 		NO_ADDITIONAL_INFO);
-		pHunter->AddToAlcoholQuantity(-5);
+
 		pHunter->GetFSM()->ChangeState(HealHimself::Instance());
 	}else {	
 		float punch_probability = rand() % 100;
-		if (punch_probability < 80) {
+		if (punch_probability < 50) {
 			cout << "\n" << GetNameOfEntity(pHunter->ID()) << ": " << "Hit ya'";
 			// we send the message of hit to miner
 			Dispatch->DispatchMessage(SEND_MSG_IMMEDIATELY, //time delay
@@ -175,8 +179,12 @@ void FightAtSaloonH::Execute(Hunter * pHunter)
 
 void FightAtSaloonH::Exit(Hunter * pHunter)
 {
-	cout << "\n" << GetNameOfEntity(pHunter->ID()) << ": "
-		<< "More beverage pls !";
+	if (pHunter->h_Hurt())
+		cout << "\n" << GetNameOfEntity(pHunter->ID()) << ": "
+			<< "Aouch I'm hurt !";
+	else
+		cout << "\n" << GetNameOfEntity(pHunter->ID()) << ": "
+			<< "More beverage pls !";
 }
 
 bool FightAtSaloonH::OnMessage(Hunter * pHunter, const Telegram & msg)
@@ -189,7 +197,7 @@ bool FightAtSaloonH::OnMessage(Hunter * pHunter, const Telegram & msg)
 		cout << "\nMessage handled by " << GetNameOfEntity(pHunter->ID())
 			<< " at time: " << Clock->GetCurrentTime();
 
-		SetTextColor(FOREGROUND_RED | FOREGROUND_INTENSITY);
+		SetTextColor(FOREGROUND_BLUE | FOREGROUND_INTENSITY);
 
 		cout << "\n" << GetNameOfEntity(pHunter->ID())
 			<< ": Aouch !";
@@ -202,10 +210,10 @@ bool FightAtSaloonH::OnMessage(Hunter * pHunter, const Telegram & msg)
   		cout << "\nMessage handled by " << GetNameOfEntity(pHunter->ID())
 			<< " at time: " << Clock->GetCurrentTime();
 
-		SetTextColor(FOREGROUND_RED | FOREGROUND_INTENSITY);
+		SetTextColor(FOREGROUND_BLUE | FOREGROUND_INTENSITY);
 
 		cout << "\n" << GetNameOfEntity(pHunter->ID())
-			<< ": Chiure démoniaque !";
+			<< ": Try again !";
 		
     return true;
 
@@ -213,10 +221,10 @@ bool FightAtSaloonH::OnMessage(Hunter * pHunter, const Telegram & msg)
   		cout << "\nMessage handled by " << GetNameOfEntity(pHunter->ID())
 			<< " at time: " << Clock->GetCurrentTime();
 
-		SetTextColor(FOREGROUND_RED | FOREGROUND_INTENSITY);
+		SetTextColor(FOREGROUND_BLUE | FOREGROUND_INTENSITY);
 
 		cout << "\n" << GetNameOfEntity(pHunter->ID())
-			<< ": Je chie dans la pute qui t'a mise au monde !";
+			<< ": You are a dead man !";
 		
     pHunter->GetFSM()->ChangeState(EnterAndDrinkAtSaloon::Instance());
     return true;
@@ -241,18 +249,19 @@ HealHimself * HealHimself::Instance()
 void HealHimself::Enter(Hunter * pHunter)
 {
 	//The hunter is going to heal himself
-	if (pHunter->Location() != hospital)
+	if (pHunter->Location() != saloon)
 	{
-		cout << "\n" << GetNameOfEntity(pHunter->ID()) << ": " << "It hurts ! Going to Hospital";
-		pHunter->ChangeLocation(hospital);
+		cout << "\n" << GetNameOfEntity(pHunter->ID()) << ": " << "It hurts !";
+		pHunter->ChangeLocation(saloon);
 	}
 }
 
 void HealHimself::Execute(Hunter * pHunter)
 {
 	//The hunter recover
+	pHunter->AddToAlcoholQuantity(-5);
 	pHunter->h_AddToHealth(3);
-	cout << "\n" << GetNameOfEntity(pHunter->ID()) << ": " << "I feel much better !";
+	cout << "\n" << GetNameOfEntity(pHunter->ID()) << ": " << "I recovered and feel much better !";
 	pHunter->GetFSM()->ChangeState(EnterAndDrinkAtSaloon::Instance());
 }
 
